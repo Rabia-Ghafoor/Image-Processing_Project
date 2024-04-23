@@ -1,6 +1,14 @@
 import java.awt.*;
 
-class ImageOperations {
+class ImageOperations  {
+
+    // what is missing from this class that would generate the ppm file?
+    // why can't I view any executable file as of now?
+    // what kind of things to check in the testcase? cause these are ppm files, like how do i compare the output
+    // What do we need to do with the terminal to generate the ppm file?
+   // https://www.cs.rhodes.edu/welshc/CS141/F19/ppmReader.html, what are we supposed to do with this, apart froom viewing the image
+
+
 
   public static Image zeroRed(Image img){
 
@@ -70,9 +78,9 @@ class ImageOperations {
 
 
 
-    public static Image crop(Image, int x1, int y1, int w, int h){
+    public static Image crop(Image img, int x1, int y1, int w, int h){
 
-        Image myImage = new Image(w, h);
+        Image myImage = new Image(w, h); //creating  a new image with width w and height h
         for (int y = 0; y < h; y++) {
             for (int x = 0; x < w; x++) {
                 Color pixel = new Color(img.getRGB(x1 + x, y1 + y));
@@ -117,27 +125,27 @@ class ImageOperations {
     public static  Image repeat(Image img, int n, String dir){
 
         if (dir.equals("horizontal")) {
-            Image newImage = new Image(img.getWidth() * n, img.getHeight());
+            Image myImage = new Image(img.getWidth() * n, img.getHeight());
             for (int y = 0; y < img.getHeight(); y++) {
                 for (int x = 0; x < img.getWidth(); x++) {
                     Color pixel = new Color(img.getRGB(x, y));
                     for (int i = 0; i < n; i++) {
-                        newImage.setRGB(x + i * img.getWidth(), y, pixel.getRGB());
+                        myImage.setRGB(x + i * img.getWidth(), y, pixel.getRGB());
                     }
                 }
             }
-            return newImage;
+            return myImage;
         } else if (dir.equals("vertical")) {
-            Image newImage = new Image(img.getWidth(), img.getHeight() * n);
+            Image myImage = new Image(img.getWidth(), img.getHeight() * n);
             for (int y = 0; y < img.getHeight(); y++) {
                 for (int x = 0; x < img.getWidth(); x++) {
                     Color pixel = new Color(img.getRGB(x, y));
                     for (int i = 0; i < n; i++) {
-                        newImage.setRGB(x, y + i * img.getHeight(), pixel.getRGB());
+                        myImage.setRGB(x, y + i * img.getHeight(), pixel.getRGB());
                     }
                 }
             }
-            return newImage;
+            return myImage;
         }
         return null;
 
@@ -147,16 +155,41 @@ class ImageOperations {
 
     public static void main(String[] args) {
 
-        //Create a new PpmImage object with width 10 and height 10
-        PpmImage image = new PpmImage(10, 10);
-        //Create a new Color object with RGB values 255, 255, 255
-        Color color = new Color(255, 255, 255);
-        //Set the color of the pixel at position 0, 0 to the color object
-        image.setPixel(0, 0, color);
-        //Get the color of the pixel at position 0, 0
-        Color pixelColor = image.getPixel(0, 0);
-        //Print the RGB values of the pixel color
-        System.out.println(pixelColor.getRed() + " " + pixelColor.getGreen() + " " + pixelColor.getBlue());
+
+      if (args[0].equals("--zeroRed")) {
+            Image img = new Image();
+            Image myImage = zeroRed(img);
+            //write the new image to a file
+        } else if (args[0].equals("--grayscale")) {
+            Image img = new Image();
+            Image myImage = grayscale(img);
+            //write the new image to a file
+        } else if (args[0].equals("--invert")) {
+            Image img = new Image();
+            Image myImage = invert(img);
+            //write the new image to a file
+        } else if (args[0].equals("--crop")) {
+            Image img = new Image();
+            int x1 = Integer.parseInt(args[1]);
+            int y1 = Integer.parseInt(args[2]);
+            int w = Integer.parseInt(args[3]);
+            int h = Integer.parseInt(args[4]);
+            Image myImage = crop(img, x1, y1, w, h);
+            //write the new image to a file
+        } else if (args[0].equals("--mirror")) {
+            Image img = new Image();
+            String mode = args[1];
+            Image myImage = mirror(img, mode);
+            //write the new image to a file
+        } else if (args[0].equals("--repeat")) {
+            Image img = new Image();
+            int n = Integer.parseInt(args[1]);
+            String dir = args[2];
+            Image myImage = repeat(img, n, dir);
+            //write the new image to a file
+        }
+
+
 
     }
 
