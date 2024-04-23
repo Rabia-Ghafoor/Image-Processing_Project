@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.IOException;
 
 class ImageOperations  {
 
@@ -80,7 +81,12 @@ class ImageOperations  {
 
     public static Image crop(Image img, int x1, int y1, int w, int h){
 
-        Image myImage = new Image(w, h); //creating  a new image with width w and height h
+        Image myImage = new Image(w, h) {
+            @Override
+            public void output(String filename) throws IOException {
+
+            }
+        }; //creating  a new image with width w and height h
         for (int y = 0; y < h; y++) {
             for (int x = 0; x < w; x++) {
                 Color pixel = new Color(img.getRGB(x1 + x, y1 + y));
@@ -125,7 +131,12 @@ class ImageOperations  {
     public static  Image repeat(Image img, int n, String dir){
 
         if (dir.equals("horizontal")) {
-            Image myImage = new Image(img.getWidth() * n, img.getHeight());
+            Image myImage = new Image(img.getWidth() * n, img.getHeight()) {
+                @Override
+                public void output(String filename) throws IOException {
+
+                }
+            };
             for (int y = 0; y < img.getHeight(); y++) {
                 for (int x = 0; x < img.getWidth(); x++) {
                     Color pixel = new Color(img.getRGB(x, y));
@@ -136,7 +147,13 @@ class ImageOperations  {
             }
             return myImage;
         } else if (dir.equals("vertical")) {
-            Image myImage = new Image(img.getWidth(), img.getHeight() * n);
+
+            Image myImage = new Image(img.getWidth() * n, img.getHeight()) {
+                @Override
+                public void output(String filename) throws IOException {
+
+                }
+            };
             for (int y = 0; y < img.getHeight(); y++) {
                 for (int x = 0; x < img.getWidth(); x++) {
                     Color pixel = new Color(img.getRGB(x, y));
