@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 interface Writable {
-    // TODO.
+    void output(String filename) throws IOException;
 }

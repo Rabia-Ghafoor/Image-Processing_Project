@@ -1,6 +1,6 @@
 import java.awt.*;
 
-abstract class Image {
+abstract class Image implements Writable{
     //abstract Image class, which stores an image width and height as instance variables.
     private int width;
     private int height;
