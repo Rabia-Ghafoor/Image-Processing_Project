@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 class ImageOperations  {
@@ -170,23 +171,26 @@ class ImageOperations  {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
 
       if (args[0].equals("--zeroRed")) {
-            Image img = new Image();
+            Image img = new PpmImage("pm.ppm");
             Image myImage = zeroRed(img);
             //write the new image to a file
         } else if (args[0].equals("--grayscale")) {
-            Image img = new Image();
+            //Image img = new Image();
+          Image img = new PpmImage("pm.ppm");
             Image myImage = grayscale(img);
             //write the new image to a file
         } else if (args[0].equals("--invert")) {
-            Image img = new Image();
+            //Image img = new Image();
+            Image img = new PpmImage("pm.ppm");
             Image myImage = invert(img);
             //write the new image to a file
         } else if (args[0].equals("--crop")) {
-            Image img = new Image();
+            //Image img = new Image();
+            Image img = new PpmImage("pm.ppm");
             int x1 = Integer.parseInt(args[1]);
             int y1 = Integer.parseInt(args[2]);
             int w = Integer.parseInt(args[3]);
@@ -194,12 +198,14 @@ class ImageOperations  {
             Image myImage = crop(img, x1, y1, w, h);
             //write the new image to a file
         } else if (args[0].equals("--mirror")) {
-            Image img = new Image();
+            //Image img = new Image();
+            Image img = new PpmImage("pm.ppm");
             String mode = args[1];
             Image myImage = mirror(img, mode);
             //write the new image to a file
         } else if (args[0].equals("--repeat")) {
-            Image img = new Image();
+            //Image img = new Image();
+            Image img = new PpmImage("pm.ppm");
             int n = Integer.parseInt(args[1]);
             String dir = args[2];
             Image myImage = repeat(img, n, dir);
