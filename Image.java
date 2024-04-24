@@ -43,4 +43,15 @@ abstract class Image implements Writable{
     public void setColors(Color[][] colors) {
         this.colors = colors;
     }
+
+
+    public void setRGB(int i, int y, int rgb) {
+        this.colors[i][y] = new Color(rgb);
+
+    }
+
+    public int getRGB(int x, int y) {
+        return colors[x][y].getRGB();
+
+    }
 }

@@ -1,8 +1,6 @@
 import java.awt.*;
 import java.awt.Color;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 
@@ -13,10 +11,25 @@ class PpmImage extends Image {
 
         //Call superclass constructor to initialize width, height, and colors array
         super(width, height);
+        initializeBlack();
     }
 
+    private void initializeBlack(){
+        Color[][] col = new Color[this.getWidth()][this.getHeight()];
+        for (int i = 0; i < getWidth(); i++) {
+            for (int j = 0; j < getHeight(); j++) {
+                col[i][j] = new Color(0,0,0);
+            }
+        }
+        // loop each height pixel
+            // loop width
+                // access new color pixel at positions set equal Color.BLACK
+
+        setColors(col);
+    }
     //Constructor to create a PpmImage by reading data from a provided PPM file
     PpmImage(String filename) throws FileNotFoundException {
+        super();
         readImage(filename);
     }
 
@@ -31,6 +44,8 @@ class PpmImage extends Image {
         this.setWidth(width);
         this.setHeight(height);
         this.setColors(new Color[height][width]);
+        sc.nextLine();
+        sc.nextLine();
 
 
         //Iterate over each pixel in the image
@@ -41,14 +56,35 @@ class PpmImage extends Image {
                 int blue = sc.nextInt();
 
                 //Create a Color object and store it in the colors array
-                this.getColors()[i][j] = new Color(red, green, blue);
+                this.getColors()[j][i] = new Color(red, green, blue);
             }
         }
         sc.close();
     }
 
+
+
     @Override
     public void output(String filename) throws IOException {
+        FileWriter writ = new FileWriter(filename);
+        writ.write("P3\n");
+        writ.write(this.getWidth() + " " + this.getHeight() + "\n");
+        writ.write("255\n");
+
+        for (int i = 0; i < getHeight(); i++) {
+            for (int j = 0; j < getWidth(); j++) {
+                Color pix = this.getColors()[j][i];
+                writ.write(pix.getRed() + " " + pix.getGreen() + " " + pix.getBlue() + " ");
+                // create a variable to capture the pixel
+                // write to file the red, green, blue
+
+
+
+            }
+            writ.write("\n");
+
+        }
+        writ.close();
     }
 
 
